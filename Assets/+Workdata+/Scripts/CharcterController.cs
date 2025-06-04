@@ -77,12 +77,21 @@ public class CharcterController : MonoBehaviour
         {
             Debug.Log("Es war einen Münze");  
             Destroy(other.gameObject);
-           // CollectablesManager.AddCoin();
+            collectManager.AddCoin();
         } 
         
-        else if (other.CompareTag("obstacle"))
+        if (other.CompareTag("diamond"))
         {
-            Debug.Log("Es war einen Obstacle");
+            Debug.Log("Es war einen Diamond");  
+            Destroy(other.gameObject);
+            collectManager.AddDiamond();
+        } 
+        
+        
+        
+        else if (other.CompareTag("enemy"))
+        {
+            Debug.Log("Es war einen Gegner");
             uiManager.ShowLosingPanel();
             rb.linearVelocity = Vector2.zero;
             canMove = false;
