@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
     public void UpdateCoinText(int newCoinCount) 
     {
         textCounterCoin.text = newCoinCount.ToString();
-        if (newCoinCount == 1)
+        if (newCoinCount == 2)
         {
             ShowWinningPanel();
         }
@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < 59;)
         {
-            Debug.Log("Timer " + i);
+            Debug.Log("Timer: " + i);
             i++;
             yield return new WaitForSeconds(1f);
         }
