@@ -3,13 +3,13 @@ using UnityEngine.InputSystem;
 
 public class CharcterController : MonoBehaviour
 {
-   [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpforce = 3f;
     private float direction = 0f;
 
     private Rigidbody2D rb;
 
-    [Header("GroundCheck")] 
+    [Header("GroundCheck")]
     // hier speichern wir das Transform des GroundCheck-objekts zwischen (muss im Inspektor zugewiesen sein)
     [SerializeField] private Transform transformGroundCheck;
     
@@ -20,9 +20,8 @@ public class CharcterController : MonoBehaviour
     [Header("Manager")] 
     [SerializeField] private CollectablesManager collectManager;
     [SerializeField] private UIManager uiManager;
-    
+
     private bool canMove = true;
-    
 
 
     void Start()
@@ -54,7 +53,7 @@ public class CharcterController : MonoBehaviour
 
             //transform.position += direction.normalized * speed * Time.deltaTime;
 
-            rb.linearVelocity = new Vector2(direction * speed, y:rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(direction * speed, y: rb.linearVelocity.y);
         }
     }
 
@@ -62,33 +61,31 @@ public class CharcterController : MonoBehaviour
     {
         if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.2f, layerGround))
         {
-            rb.linearVelocity = new Vector2(x:0, y: jumpforce);
+            rb.linearVelocity = new Vector2(x: 0, y: jumpforce);
         }
     }
-    
-    
+
+
     //----collider------
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
         Debug.Log("Wir sind mit etwas kollidiert");
-        
+
         if (other.CompareTag("coin"))
         {
-            Debug.Log("Es war einen Münze");  
+            Debug.Log("Es war einen Münze");
             Destroy(other.gameObject);
             collectManager.AddCoin();
-        } 
-        
+        }
+
         if (other.CompareTag("diamond"))
         {
-            Debug.Log("Es war einen Diamond");  
+            Debug.Log("Es war einen Diamond");
             Destroy(other.gameObject);
             collectManager.AddDiamond();
-        } 
-        
-        
-        
+        }
+
+
         else if (other.CompareTag("enemy"))
         {
             Debug.Log("Es war einen Gegner");

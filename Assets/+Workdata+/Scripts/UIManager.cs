@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
         textCounterCoin.text = newCoinCount.ToString();
         if (newCoinCount == 1)
         {
-            WinningPanel.SetActive(true);
+            ShowWinningPanel();
         }
     }
     
