@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
         textCounterTimer.text = textCounterInt.ToString();
         
         StartCoroutine(Timer());
-       
+        StartCoroutine(Countdown());
     }
 
    
@@ -110,13 +110,13 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator Countdown()
     {
-        for (countdownInt = 0; countdownInt < 3; countdownInt++)
+        for (countdownInt = 3; countdownInt > 0; countdownInt--)
         {
-            charactercontroller.canMove = false;
-            Debug.Log("Countdown: " + textCounterInt.ToString());
+            //Debug.Log("Countdown: " + countdownText.ToString());
+            countdownText.text = countdownInt.ToString();
             yield return new WaitForSeconds(1f);
         }
-        
+        gameObject.SetActive(false);
     }
 
 }

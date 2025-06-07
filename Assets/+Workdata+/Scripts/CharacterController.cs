@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,10 +28,8 @@ public class CharacterController : MonoBehaviour
 
     void Start()
     {
-        canMove = false;
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(uiManager.Countdown());
-        canMove = true;
+        StartCoroutine(MoveCountdown());
     }
 
 
@@ -69,6 +68,15 @@ public class CharacterController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(x: 0, y: jumpforce);
         }
+    }
+    
+    public IEnumerator MoveCountdown(){
+        for (int i = 3; i > 0; --i)
+        {
+            canMove = false;
+            yield return new WaitForSeconds(1f);
+        } 
+        canMove = true;
     }
 
 
@@ -109,4 +117,5 @@ public class CharacterController : MonoBehaviour
         }
         
     }
+
 }
