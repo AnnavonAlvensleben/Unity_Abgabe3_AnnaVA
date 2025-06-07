@@ -1,7 +1,8 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharcterController : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpforce = 3f;
@@ -21,12 +22,15 @@ public class CharcterController : MonoBehaviour
     [SerializeField] private CollectablesManager collectManager;
     [SerializeField] private UIManager uiManager;
 
-    private bool canMove = true;
+    public bool canMove = false;
 
 
     void Start()
     {
+        canMove = false;
         rb = GetComponent<Rigidbody2D>();
+        StartCoroutine(uiManager.Countdown());
+        canMove = true;
     }
 
 
@@ -39,14 +43,16 @@ public class CharcterController : MonoBehaviour
             if (Keyboard.current.aKey.isPressed)
             {
                 direction = -1;
+                gameObject.transform.eulerAngles = new Vector3(0f, 180f, 0f);
             }
 
             if (Keyboard.current.dKey.isPressed)
             {
                 direction = 1;
+                gameObject.transform.eulerAngles = new Vector3(0f, 0f, 0f);
             }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            if (Keyboard.current.spaceKey.isPressed)
             {
                 Jump();
             }
@@ -59,7 +65,7 @@ public class CharcterController : MonoBehaviour
 
     void Jump()
     {
-        if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.2f, layerGround))
+        if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.1f, layerGround))
         {
             rb.linearVelocity = new Vector2(x: 0, y: jumpforce);
         }
@@ -93,5 +99,14 @@ public class CharcterController : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             canMove = false;
         }
+        
+        else if (other.CompareTag("DeathZone"))
+        {
+            Debug.Log("Death Zone");
+            uiManager.ShowLosingPanel();
+            rb.linearVelocity = Vector2.zero;
+            canMove = false;
+        }
+        
     }
 }

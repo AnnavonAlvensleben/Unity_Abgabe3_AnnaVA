@@ -7,6 +7,7 @@ TagManager:
   - coin
   - enemy
   - diamond
+  - DeathZone
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - d
   - 
   - 
   - 
@@ -43,6 +44,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2358111287
+    locked: 0
+  - name: Midground
+    uniqueID: 1229513929
     locked: 0
   m_RenderingLayers:
   - Default

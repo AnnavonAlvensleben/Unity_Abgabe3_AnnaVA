@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI textCounterTimer;
+    private int textCounterInt;
+    
+    [SerializeField] private TextMeshProUGUI countdownText;
+    private int countdownInt;
     
     [Header("Panels")]
     [SerializeField] private GameObject WinningPanel;
@@ -23,7 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button buttonReloadLevelWin;
     [SerializeField] private Button buttonMainMenuLose;
     [SerializeField] private Button buttonMainMenuWin;
-    
+
+    CharacterController charactercontroller;
 
     void Start()
     {
@@ -34,6 +39,8 @@ public class UIManager : MonoBehaviour
         buttonReloadLevelWin.onClick.AddListener(ReloadLevel);
         buttonMainMenuLose.onClick.AddListener(switchScene);
         buttonMainMenuWin.onClick.AddListener(switchScene);
+        
+        textCounterTimer.text = textCounterInt.ToString();
         
         StartCoroutine(Timer());
        
@@ -86,18 +93,30 @@ public class UIManager : MonoBehaviour
     
     IEnumerator Timer()
     {
-        for (int i = 0; i < 59;)
+        for (textCounterInt = 1; ; textCounterInt++)
         {
-            Debug.Log("Timer: " + i);
-            i++;
+            Debug.Log("Timer: " + textCounterInt);
             yield return new WaitForSeconds(1f);
+            
+            textCounterTimer.text = textCounterInt.ToString();
         }
         Debug.Log("Loop ist zuende");
     }
-    
-    public void UpdateTimerText(int newTimerCount) 
+
+    public void UpdateTimerText(int newTimerCount)
     {
         textCounterTimer.text = newTimerCount.ToString();
+    }
+
+    public IEnumerator Countdown()
+    {
+        for (countdownInt = 0; countdownInt < 3; countdownInt++)
+        {
+            charactercontroller.canMove = false;
+            Debug.Log("Countdown: " + textCounterInt.ToString());
+            yield return new WaitForSeconds(1f);
         }
+        
+    }
 
 }
