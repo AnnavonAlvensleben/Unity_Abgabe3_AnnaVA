@@ -5,12 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpforce = 3f;
-    private float direction = 0f;
-
-    private Rigidbody2D rb;
-
     [Header("GroundCheck")]
     // hier speichern wir das Transform des GroundCheck-objekts zwischen (muss im Inspektor zugewiesen sein)
     [SerializeField] private Transform transformGroundCheck;
@@ -18,22 +12,27 @@ public class CharacterController : MonoBehaviour
     // in einer LayerMask können wir Ebenen aus unserem Projekt zuweisen für spätere Verwendung im Script
     [SerializeField] private LayerMask layerGround;
     
-    
     [Header("Manager")] 
     [SerializeField] private CollectablesManager collectManager;
     [SerializeField] private UIManager uiManager;
+    
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpforce = 3f;
+    public float direction = 0f;
 
-    public bool canMove = false;
+    private Rigidbody2D rb;                                    // created a rigidbody component to be able to use in the script  
+
+    public bool canMove = false;                               // created a bool to determine if the player can move -> false/ true
 
 
-    void Start()
+    void Start()                                               // this function is called only once when the game starts //                               
     {
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(MoveCountdown());
     }
 
 
-    void Update()
+    void Update()                                                // this function updates ever frame //
     {
         if (canMove)
         {
@@ -56,15 +55,13 @@ public class CharacterController : MonoBehaviour
                 Jump();
             }
 
-            //transform.position += direction.normalized * speed * Time.deltaTime;
-
             rb.linearVelocity = new Vector2(direction * speed, y: rb.linearVelocity.y);
         }
     }
 
     void Jump()
     {
-        if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.1f, layerGround))
+        if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.05f, layerGround))
         {
             rb.linearVelocity = new Vector2(x: 0, y: jumpforce);
         }
@@ -80,21 +77,21 @@ public class CharacterController : MonoBehaviour
     }
 
 
-    //----collider------
+    //----collider------//
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Wir sind mit etwas kollidiert");
+        //Debug.Log("We collided with something");
 
         if (other.CompareTag("coin"))
         {
-            Debug.Log("Es war einen Münze");
+            Debug.Log("Coin collected");
             Destroy(other.gameObject);
             collectManager.AddCoin();
         }
 
         if (other.CompareTag("diamond"))
         {
-            Debug.Log("Es war einen Diamond");
+            Debug.Log("Diamond collected");
             Destroy(other.gameObject);
             collectManager.AddDiamond();
         }
@@ -102,7 +99,7 @@ public class CharacterController : MonoBehaviour
 
         else if (other.CompareTag("enemy"))
         {
-            Debug.Log("Es war einen Gegner");
+            Debug.Log("It was an enemy");
             uiManager.ShowLosingPanel();
             rb.linearVelocity = Vector2.zero;
             canMove = false;
@@ -110,7 +107,7 @@ public class CharacterController : MonoBehaviour
         
         else if (other.CompareTag("DeathZone"))
         {
-            Debug.Log("Death Zone");
+            Debug.Log("Fallen into Death Zone");
             uiManager.ShowLosingPanel();
             rb.linearVelocity = Vector2.zero;
             canMove = false;

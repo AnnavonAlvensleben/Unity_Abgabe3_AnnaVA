@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     private int countdownInt;
     
+    [SerializeField] private TextMeshProUGUI scoreText;
+    private int scoreInt;
+    
     [Header("Panels")]
     [SerializeField] private GameObject WinningPanel;
     [SerializeField] private GameObject LosingPanel;
@@ -28,7 +31,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button buttonMainMenuLose;
     [SerializeField] private Button buttonMainMenuWin;
 
-    CharacterController charactercontroller;
+    [SerializeField] CharacterController charactercontroller;
+    [SerializeField] CollectablesManager collectablesManager;
 
     void Start()
     {
@@ -83,16 +87,19 @@ public class UIManager : MonoBehaviour
     public void ShowLosingPanel()
     {
         LosingPanel.SetActive(true);
+        
     }
     public void ShowWinningPanel()
     {
         WinningPanel.SetActive(true);
+        DisplayScore();
     }
 
     
     
     IEnumerator Timer()
     {
+        yield return new WaitForSeconds(3f);
         for (textCounterInt = 1; ; textCounterInt++)
         {
             Debug.Log("Timer: " + textCounterInt);
@@ -102,12 +109,7 @@ public class UIManager : MonoBehaviour
         }
         Debug.Log("Loop ist zuende");
     }
-
-    public void UpdateTimerText(int newTimerCount)
-    {
-        textCounterTimer.text = newTimerCount.ToString();
-    }
-
+    
     public IEnumerator Countdown()
     {
         for (countdownInt = 3; countdownInt > 0; countdownInt--)
@@ -116,7 +118,13 @@ public class UIManager : MonoBehaviour
             countdownText.text = countdownInt.ToString();
             yield return new WaitForSeconds(1f);
         }
-        gameObject.SetActive(false);
+        countdownText.gameObject.SetActive(false);
+    }
+
+    void DisplayScore()
+    {
+        scoreInt = textCounterInt - collectablesManager.counterCoins - collectablesManager.counterDiamonds;
+        scoreText.text = scoreInt.ToString();
     }
 
 }

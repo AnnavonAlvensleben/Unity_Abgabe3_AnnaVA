@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CollectablesManager : MonoBehaviour
 {
-    [SerializeField] private int counterCoins = 0; 
-    [SerializeField] private int counterDiamonds = 0;
+    [SerializeField] public int counterCoins = 0; 
+    [SerializeField] public int counterDiamonds = 0;
     [SerializeField] private UIManager uiManager;
 
     private void Start()
@@ -22,7 +22,7 @@ public class CollectablesManager : MonoBehaviour
     
     public void AddDiamond()
     { 
-        counterDiamonds++;
+        counterDiamonds += 10;
         uiManager.UpdateDiamondText(counterDiamonds);
     }
 }
