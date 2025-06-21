@@ -22,7 +22,7 @@ public class CollectablesManager : MonoBehaviour
     
     public void AddDiamond()
     { 
-        counterDiamonds += 10;
+        counterDiamonds++;
         uiManager.UpdateDiamondText(counterDiamonds);
     }
 }

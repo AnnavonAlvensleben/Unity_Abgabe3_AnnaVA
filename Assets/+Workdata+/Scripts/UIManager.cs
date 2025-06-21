@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject LosingPanel;
     
     [Header("Buttons")]
+    [SerializeField] private Button buttonReloadInGame;
     [SerializeField] private Button buttonReloadLevel;
     [SerializeField] private Button buttonReloadLevelWin;
     [SerializeField] private Button buttonMainMenuLose;
@@ -39,12 +40,13 @@ public class UIManager : MonoBehaviour
         WinningPanel.SetActive(false);
         LosingPanel.SetActive(false);
         
+        buttonReloadInGame.onClick.AddListener(ReloadLevel);
         buttonReloadLevel.onClick.AddListener(ReloadLevel);
         buttonReloadLevelWin.onClick.AddListener(ReloadLevel);
         buttonMainMenuLose.onClick.AddListener(switchScene);
         buttonMainMenuWin.onClick.AddListener(switchScene);
         
-        textCounterTimer.text = textCounterInt.ToString();
+        textCounterTimer.text = textCounterInt.ToString() + "s";
         
         StartCoroutine(Timer());
         StartCoroutine(Countdown());
@@ -105,7 +107,7 @@ public class UIManager : MonoBehaviour
             Debug.Log("Timer: " + textCounterInt);
             yield return new WaitForSeconds(1f);
             
-            textCounterTimer.text = textCounterInt.ToString();
+            textCounterTimer.text = textCounterInt.ToString() + "s";
         }
         Debug.Log("Loop ist zuende");
     }
@@ -124,7 +126,7 @@ public class UIManager : MonoBehaviour
     void DisplayScore()
     {
         scoreInt = textCounterInt - collectablesManager.counterCoins - collectablesManager.counterDiamonds;
-        scoreText.text = scoreInt.ToString();
+        scoreText.text = scoreInt.ToString() + "s";
     }
 
 }

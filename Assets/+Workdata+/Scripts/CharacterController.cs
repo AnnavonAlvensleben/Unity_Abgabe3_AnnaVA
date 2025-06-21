@@ -24,7 +24,8 @@ public class CharacterController : MonoBehaviour
 
     public bool canMove = false;                               // created a bool to determine if the player can move -> false/ true
 
-
+    public Animator animator;
+    
     void Start()                                               // this function is called only once when the game starts //                               
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,7 +37,9 @@ public class CharacterController : MonoBehaviour
     {
         if (canMove)
         {
-            direction = 0f;
+            animator.SetFloat("Speed",Mathf.Abs(direction));
+
+            direction = 0f; 
 
             if (Keyboard.current.aKey.isPressed)
             {
@@ -63,8 +66,13 @@ public class CharacterController : MonoBehaviour
     {
         if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.05f, layerGround))
         {
-            rb.linearVelocity = new Vector2(x: 0, y: jumpforce);
+            rb.linearVelocity = new Vector2(x: 0, y: jumpforce);    
         }
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("isJumping", false);
     }
     
     public IEnumerator MoveCountdown(){
