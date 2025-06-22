@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Name
+  m_text: Bash
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e39a191431efba4d9442d3197edd437, type: 2}
   m_sharedMaterial: {fileID: 8124248784101940022, guid: 1e39a191431efba4d9442d3197edd437, type: 2}

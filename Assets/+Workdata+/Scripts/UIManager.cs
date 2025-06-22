@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
     public void UpdateCoinText(int newCoinCount) 
     {
         textCounterCoin.text = newCoinCount.ToString();
-        if (newCoinCount == 2)
+        if (newCoinCount == 6)
         {
             ShowWinningPanel();
         }

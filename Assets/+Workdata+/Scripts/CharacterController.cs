@@ -75,7 +75,7 @@ public class CharacterController : MonoBehaviour                       // a new 
 
     void Jump()                                                                                     // void -> creates a new function. Jump -> is given name (the name doesn't affect the functions function)
     {
-        if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.05f, layerGround)) // checks if there is a ground to jump from in the radius of 0.05 -> so that the player cant jump in the air  
+        if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.05f, layerGround))             // checks if there is a ground to jump from in the radius of 0.05 -> so that the player cant jump in the air  
         {
             rb.linearVelocity = new Vector2(x: 0, y: jumpforce);                                    // makes the player jump on the y axes
             audioSource.PlayOneShot(jumpSound);
