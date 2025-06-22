@@ -14,12 +14,6 @@ public class MovingObstacle : MonoBehaviour
     
     void Update()
     {
-       // direction = -1;
-       // gameObject.transform.eulerAngles = new Vector3(0f, 180f, 0f);
-       // 
-       // direction = 1;
-       // gameObject.transform.eulerAngles = new Vector3(0f, 0f, 0f);
-       // 
        gameObject.transform.Translate(direction * speed * Time.deltaTime, 0f, 0f);
     }
     IEnumerator MoveObstacle()

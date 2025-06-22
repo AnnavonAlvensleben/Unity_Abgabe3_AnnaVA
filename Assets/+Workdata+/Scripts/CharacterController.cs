@@ -29,13 +29,18 @@ public class CharacterController : MonoBehaviour                       // a new 
 
     public Animator animator;
     
+    public AudioClip jumpSound;                                         // created variables to add sound effects 
+    public AudioClip collectSound;
+    private AudioSource audioSource;
+    
     //public event System.Action OnLand;
     
     
     void Start()                                                              // this function is called only once when the game starts                            
     {
-        rb = GetComponent<Rigidbody2D>();                                     // giving the variable the same values as in the insepctor 
+        rb = GetComponent<Rigidbody2D>();                                     // giving the variable the same values as in the inspector 
         StartCoroutine(MoveCountdown());                               // Starting a Coroutine 
+        audioSource = GetComponent<AudioSource>();                            // assigns the audio variables
     }
 
 
@@ -59,7 +64,7 @@ public class CharacterController : MonoBehaviour                       // a new 
                 gameObject.transform.eulerAngles = new Vector3(0f, 0f, 0f);
             }
 
-            if (Keyboard.current.spaceKey.isPressed)
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
                 Jump();                                                                            //calls the jump function that is made separately in Update to let it work all the time
             }
@@ -73,6 +78,7 @@ public class CharacterController : MonoBehaviour                       // a new 
         if (Physics2D.OverlapCircle(transformGroundCheck.position, 0.05f, layerGround)) // checks if there is a ground to jump from in the radius of 0.05 -> so that the player cant jump in the air  
         {
             rb.linearVelocity = new Vector2(x: 0, y: jumpforce);                                    // makes the player jump on the y axes
+            audioSource.PlayOneShot(jumpSound);
             //animator.SetBool("isJumping", true);
         }
     }
@@ -101,6 +107,7 @@ public class CharacterController : MonoBehaviour                       // a new 
         {
             Debug.Log("Coin collected");                                    // shows if the player is collided with the object in the Debug Log
             Destroy(other.gameObject);                                      // object gets destroyed after collision 
+            audioSource.PlayOneShot(collectSound);                          // plays sound when coin is collected
             collectManager.AddCoin();                                       // Add coin function form collectables Manager is called (adds a 1 to the coin counter)
         }
 
@@ -108,6 +115,7 @@ public class CharacterController : MonoBehaviour                       // a new 
         {
             Debug.Log("Diamond collected");
             Destroy(other.gameObject);
+            audioSource.PlayOneShot(collectSound);
             collectManager.AddDiamond();
         }
 

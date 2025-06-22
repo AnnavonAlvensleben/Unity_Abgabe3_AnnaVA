@@ -78,10 +78,6 @@ public class UIManager : MonoBehaviour
    public void UpdateDiamondText(int newDiamondCount) 
    {
        textCounterDiamond.text = newDiamondCount.ToString();
-      //if (newDiamondCount == 1)
-      //{
-      //    WinningPanel.SetActive(true);
-      //}
    }
 
     
@@ -95,6 +91,7 @@ public class UIManager : MonoBehaviour
     {
         WinningPanel.SetActive(true);
         DisplayScore();
+        
     }
 
     
@@ -109,7 +106,6 @@ public class UIManager : MonoBehaviour
             
             textCounterTimer.text = textCounterInt.ToString() + "s";
         }
-        Debug.Log("Loop ist zuende");
     }
     
     public IEnumerator Countdown()
